@@ -30,6 +30,7 @@ export class App extends Component{
     }  
   } 
   const setCart=(el)=>{
+
     if(this.state.cart.length == 0){
       this.setState({cart:[el]})
     }else{
@@ -40,9 +41,10 @@ export class App extends Component{
         element.options.forEach((opt)=>
         el.options.filter((opt2)=>opt2.name==opt.name)[0].value == opt.value ? matchingOptions.push(true) : matchingOptions.push(false)
         )
+        
         if(!(matchingOptions.includes(false)) || matchingOptions.length==0){
           var cart = this.state.cart
-          cart.find((elem)=>elem.id=element.id).quantity = element.quantity+1
+          cart.find((elem)=>elem.id==element.id).quantity = element.quantity+1
           this.setState({cart:cart})
           newElement=false
         }
@@ -82,7 +84,9 @@ export class App extends Component{
   <div style={{padding:"0 50px",position:"relative" }}>
             <div className="darkenM" style={this.state.cartIsOpen  ? undefined : {display:"none"}} onClick={()=>setCartIsOpen(false)}/>
           <BrowserRouter>
-            <Header key={this.state} setCartIsOpen={setCartIsOpen} setIsOpen={setIsOpen} cartIsOpen={this.state.cartIsOpen} isOpen={this.state.isOpen} changeCurrency={changeCurrency} currency={this.state.currency} changeCategory={changeCategory} category={this.state.category} cart={this.state.cart} setCart={setCart} changeQuantity={changeQuantity}/>
+            <Header
+             key={this.state} 
+             setCartIsOpen={setCartIsOpen} setIsOpen={setIsOpen} cartIsOpen={this.state.cartIsOpen} isOpen={this.state.isOpen} changeCurrency={changeCurrency} currency={this.state.currency} changeCategory={changeCategory} category={this.state.category} cart={this.state.cart} setCart={setCart} changeQuantity={changeQuantity}/>
             
             <Routes currency={this.state.currency} category={this.state.category} 
               key={this.state.currency+this.state.category} 

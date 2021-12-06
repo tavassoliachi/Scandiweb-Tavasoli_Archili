@@ -47,11 +47,16 @@ export default class Header extends Component{
 
     render(){
         const currencies = this.state.currencyNames?.currencies || []
+        if(window.location.pathname == "/cart" && this.props.cartIsOpen){
+            this.props.setCartIsOpen(false)
+        }
         //--ADDING CATEGORY NAMES IN ARRAY, TO DYNAMICLY RENDER THEM
             const catFetchedList = this.state.categoryList
             const catList = ["all"]
-            Object.keys(catFetchedList).map((el)=>
-                catList.push(catFetchedList[el].name)
+            catFetchedList &&(
+                Object.keys(catFetchedList).map((el)=>
+                    catList.push(catFetchedList[el].name)
+                )
             )
         //-----------------------------------------------------------
         var totalN=0
@@ -59,7 +64,7 @@ export default class Header extends Component{
             <div className={styles.header}>
             <div className={styles.categories}>
                  {catList.map((el)=>{
-                    return <div onClick={()=>this.handleCatChange(el)} className={this.props.category==el?.toLowerCase() ? styles.activeCategory : styles.category}>{el.toUpperCase()}</div>
+                    return <div key={el} onClick={()=>this.handleCatChange(el)} className={this.props.category==el?.toLowerCase() ? styles.activeCategory : styles.category}>{el.toUpperCase()}</div>
                 })}
             </div>
                 <Link className={styles.logo} to='/categories'>
@@ -72,13 +77,13 @@ export default class Header extends Component{
               <div style={this.props.isOpen ? undefined : {display:"none"}} className={styles.currency}>
                   {
                   currencies.map((el)=>{
-                    return <div onClick={()=>this.handleClick(el)} style={{padding:"5px 0"}}>{el}{getSymbolFromCurrency(`${el}`)}</div>
+                    return <div key={el} onClick={()=>this.handleClick(el)} style={{padding:"5px 0"}}>{el}{getSymbolFromCurrency(`${el}`)}</div>
                   })
                   }
               </div>
               <img src={vector} className={styles.vector} style={this.props.isOpen ? {transform:"rotate(180deg)"} : undefined} onClick={()=>this.props.setIsOpen(!this.props.isOpen)}/>
              
-             <div className={styles.cartCont} onClick={()=>this.props.setCartIsOpen(!this.props.cartIsOpen)}>
+             <div className={styles.cartCont} onClick={()=>window.location.pathname!=="/cart" ? this.props.setCartIsOpen(!this.props.cartIsOpen) : ''} >
                 <img style={{width:"25px",height:"25px"}} src={cart} />
                 <div className={styles.cartLENGTH} style={!this.props.cart.length ? {display:"none"} : undefined}>
                     <p style={{transform:"translateY(-17px)"}}>{this.props.cart.length}</p>
@@ -86,21 +91,23 @@ export default class Header extends Component{
             </div>
             <div className={styles.cartItems} style={this.props.cartIsOpen ? undefined : {display:"none"}} >
                 <p className={styles.cartLength}>My Bag, {this.props.cart.length} items</p>
-                  {this.props.cart.map((el)=>
-                        <div className={styles.item}>
+                  {this.props.cart.map((el)=>{
+                      return  <div className={styles.item}
+                       key={el.id}
+                       >
                             <span style={{display:"none"}}>{totalN+=el.prices.filter((el1)=>el1.currency==this.props.currency)[0].amount*el.quantity}</span>
                             <div className={styles.info1}>
                                 <h1>{el.brand}</h1> 
                                 <h1>{el.name}</h1> 
                                 <p>{getSymbolFromCurrency(this.props.currency)}{(el.prices.filter((el1)=>el1.currency==this.props.currency)[0].amount*el.quantity).toFixed(2)}</p>
-                                {el.attributes.map((element)=>
-                                    <>
+                                {el.attributes.map((element)=>{
+                                  return  <div  key={element.name} >
                                         <p  className={styles.subTitle}>{element.name.toUpperCase()}:</p>
                                         <div className={styles.attribute}>
                                             <ProductOptions data={element} handleSelect={()=>{}} selections={el.options} type="header_cart"/>
                                         </div>
-                                    </>
-                                )}
+                                    </div>
+                                })}
                             </div>
 
                             <div style={{display:"flex",flexDirection:"row",height:"100%",justifyContent:"center"}}>
@@ -112,7 +119,7 @@ export default class Header extends Component{
                                 <div style={{marginTop:"10px",backgroundImage:`url(${el.gallery[0]})`,width:"150px",backgroundSize:"contain",backgroundRepeat:"no-repeat"}}/>
                             </div>
                         </div>
-                  )}
+                  })}
                   <div className={styles.totalPrice}>
                       <p>TOTAL</p>
                       <p>{getSymbolFromCurrency(this.props.currency)}{totalN.toFixed(2)}</p>

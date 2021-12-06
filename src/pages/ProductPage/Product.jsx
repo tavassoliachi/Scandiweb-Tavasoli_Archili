@@ -51,13 +51,13 @@ export default class Product extends Component{
             if(this.state.selections.length==product.attributes.length){
                 this.props.setCart(
                 {
-                name:product?.id,
+                name:product?.name,
                 gallery:product?.gallery,
                 prices:product?.prices,
                 brand:product?.brand,
                 quantity:1,
                 options:this.state.selections,
-                id:Date.now(),
+                id: Date.now(),
                 attributes:product?.attributes
                 } )
                 if(this.state.notSelected == true){
@@ -71,17 +71,12 @@ export default class Product extends Component{
         return(
 
             <div className={styles.productCont}>
-            {/* {
-             this.props.darken &&(
-                <div style={{position:"absolute",height:"100%",width:"100%"}}>
-                    <div className={styles.darken}/>
-                </div>
-             )   
-            } */}
+
             <div style={{paddingTop:"20px",display:"flex",flexDirection:"row"}}>
                 <div className={styles.sideIMAGES}>
                     {sideIMAGES.map((el,index)=>{
-                       return <img src={el} style={this.state.erroredImages.includes(el) ? {display:"none"} : undefined} 
+                       return <img key={el}
+                                   src={el} style={this.state.erroredImages.includes(el) ? {display:"none"} : undefined} 
                                    onError={()=>this.setState({erroredImages:[el,...this.state.erroredImages] }) } 
                                    onClick={(e)=>imageChange(e,index)} id={index}
                               />
@@ -97,13 +92,15 @@ export default class Product extends Component{
                     <h3 className={styles.name}>{this.state.product?.name}</h3>
 
                     <div className={styles.options}>
-                        {this.state.product.attributes?.map((el)=>
-                        <>
+                        {this.state.product.attributes?.map((el)=>{
+                        return <div  key={el.name+el.brand}>
                             <h4 className={styles.subTitle}>{el.name.toUpperCase()}:</h4>
                             <div className={styles.attribute}>
-                                <ProductOptions key={this.state.selections} data={el} handleSelect={handleSelect} selections={this.state.selections}/>
+                                <ProductOptions 
+                                key={this.state.selections} 
+                                data={el} handleSelect={handleSelect} selections={this.state.selections}/>
                             </div>
-                        </>)}
+                        </div>})}
                     </div>
 
                     <div className={styles.prices}>

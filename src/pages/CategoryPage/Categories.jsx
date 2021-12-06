@@ -45,7 +45,7 @@ export default class Categories extends Component{
                          {
                              this.state.data?.category?.products.map((el)=>{
                                  const inStock = Boolean(el.inStock)
-                                return <Link key={el.id} className={styles.productCard} to={`/product?id=${el.id}`} style={inStock ? undefined : {pointerEvents:"none"}}>
+                                return <Link key={el.gallery[0]} className={styles.productCard} to={`/product?id=${el.id}`} style={inStock ? undefined : {pointerEvents:"none"}}>
                                                 <div className={styles.outOfStock} style={inStock ? {display:"none"} : undefined }>
                                                     <p>OUT OF STOCK</p>
                                                 </div>
