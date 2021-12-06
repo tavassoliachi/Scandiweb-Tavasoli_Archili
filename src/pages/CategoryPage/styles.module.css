@@ -1,0 +1,50 @@
+@font-face { 
+    font-family: "raleway"; 
+    src: url('../../components/assets/fonts/Raleway-VariableFont_wght.ttf');  
+}
+.productCard:hover{
+    box-shadow: 0 0 4px #ccc;
+}
+.productCard:hover  .cart{
+    display: inline !important;
+}
+.productCard{
+    text-decoration: none;
+    max-width:33%;
+    position: relative;
+    overflow:hidden;
+}
+
+.outOfStock{
+    background-color: rgba(255, 255, 255, 0.651);
+    position: absolute;
+    width: 100%;
+    height:100%;
+    text-align: center;
+    z-index: 2;
+}
+.item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.outOfStock > p{
+    transform:translateY(300%);
+    font-family: "raleway";
+    font-size: 24px;
+    line-height: 160%;
+    color: #8D8F9A;
+}
+.info{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%; 
+}
+.cart{
+    position: absolute;
+    bottom: 0;
+    transform:translate(-27px,13px);
+    display: none;
+}
+

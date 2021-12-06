@@ -27,7 +27,16 @@
 .App-link {
   color: #61dafb;
 }
-
+.darkenM{
+  position: absolute;
+  top: 80px;
+  right: 0;
+  left: 0;
+  bottom: -53px;
+  background-color: rgba(57, 55, 72, 0.22);
+  padding-bottom: 50px;
+  z-index:3;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,3 +45,4 @@
     transform: rotate(360deg);
   }
 }
+
