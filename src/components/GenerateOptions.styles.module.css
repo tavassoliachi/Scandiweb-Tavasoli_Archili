@@ -1,0 +1,28 @@
+.subTitle{
+    font-family: 'roboto-condensed';
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 18px;
+    color: #1D1F22;
+}
+.attribute >div{
+    width: max-content;
+    display: flex;
+    flex-direction: row;
+}
+.attribute >div >div{
+    padding:0 10px;
+    min-width: 65px;
+    height: 45px;
+    border: 1px solid #1D1F22;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right:10px;
+    font-family: "sans-pro";
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 0.05em;
+    color: #292929
+}

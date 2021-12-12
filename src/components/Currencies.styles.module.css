@@ -1,0 +1,26 @@
+.currSymbol{
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+    padding-bottom: 7px;
+}
+.currency{
+    position:absolute;
+    transform: translate(-30%,10%);
+    box-shadow: 0 0 4px #ccc;
+    background-color: white;
+    z-index: 3;
+}
+.currencyItem{
+    padding:5px 10px;
+    cursor: pointer;
+}
+.currencyItem:hover{
+    background-color: rgb(233, 233, 233);
+}
+.vector{
+    width:10px;
+    height:5px;
+    padding:10px;
+    transform: translateY(9px);
+}

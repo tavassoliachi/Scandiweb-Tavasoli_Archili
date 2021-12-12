@@ -1,9 +1,6 @@
 import { baseURL } from "./baseURL";
 import { Component } from "react";
 export class FetchData extends Component{
-    constructor(props){
-        super(props)
-    }
       async fetchCurrencies(){
         const query = `{currencies}`
         const { data } = await this.callAPI(query) // CALLING THE FUNCTION THAT FETCHES CURRENCY LIST
@@ -20,6 +17,7 @@ export class FetchData extends Component{
           name
           gallery
           description
+          inStock
           attributes{
             name
             type
@@ -40,13 +38,19 @@ export class FetchData extends Component{
         return { data }
       }
       async fetchCategories(category){
-          const query = `{category(input:{title:"${category == 'all' ? '' : category}"}){
+          const query = `{category(input:{title:"${category === 'all' ? '' : category}"}){
             name
             products {
               id
               gallery
+              brand
               name
               inStock
+              attributes{
+                items{
+                  value
+                }
+              }
               prices{
                 currency
                 amount

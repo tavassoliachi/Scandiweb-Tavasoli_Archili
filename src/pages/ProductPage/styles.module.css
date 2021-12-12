@@ -102,3 +102,8 @@
     padding-right: 100px;
     z-index:2;
 }
+.subCont{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+}

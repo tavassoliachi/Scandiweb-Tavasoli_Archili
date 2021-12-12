@@ -2,9 +2,8 @@ import { Component } from "react"
 import { FetchData } from "../../utils/fetchDATA"
 import styles from "./styles.module.css"
 import dompurify from 'dompurify'
-import ProductOptions from "../../components/ProductOptions"
-import { Link } from "react-router-dom"
 import getSymbolFromCurrency from 'currency-symbol-map'
+import GenerateOptions from "../../components/GenerateOptions"
 export default class Product extends Component{
     constructor(props){
         super(props)
@@ -43,12 +42,12 @@ export default class Product extends Component{
         }
         const handleSelect=(el,item)=>{
             const list = this.state.selections
-            const newList=list.filter((n)=> n.name!==el.name).concat({name:el.name,value:item.value}) 
+            const newList=list.filter((n)=> !Boolean(n.name===el.name)).concat({name:el.name,value:item.value}) 
             this.setState({selections:[...newList]})
         }
         const addToCart=()=>{
             const product = this.state.product
-            if(this.state.selections.length==product.attributes.length){
+            if(this.state.selections.length===product.attributes.length){
                 this.props.setCart(
                 {
                 name:product?.name,
@@ -56,11 +55,11 @@ export default class Product extends Component{
                 prices:product?.prices,
                 brand:product?.brand,
                 quantity:1,
-                options:this.state.selections,
+                options:this.state?.selections,
                 id: Date.now(),
                 attributes:product?.attributes
                 } )
-                if(this.state.notSelected == true){
+                if(this.state.notSelected === true){
                     this.setState({notSelected:false})
                 }
             }else{
@@ -72,10 +71,11 @@ export default class Product extends Component{
 
             <div className={styles.productCont}>
 
-            <div style={{paddingTop:"20px",display:"flex",flexDirection:"row"}}>
+            <div className={styles.subCont}>
+
                 <div className={styles.sideIMAGES}>
                     {sideIMAGES.map((el,index)=>{
-                       return <img key={el}
+                       return <img key={el} alt=''
                                    src={el} style={this.state.erroredImages.includes(el) ? {display:"none"} : undefined} 
                                    onError={()=>this.setState({erroredImages:[el,...this.state.erroredImages] }) } 
                                    onClick={(e)=>imageChange(e,index)} id={index}
@@ -84,40 +84,29 @@ export default class Product extends Component{
                 </div>
 
                 <div className={styles.mainImage}>
-                    <img src={mainImage[0]} id="mainImage"/>
+                    <img src={mainImage[0]} id="mainImage" alt=''/>
                 </div>
 
                 <div className={styles.info}>
                     <h1 className={styles.brand}>{this.state.product?.brand}</h1>
                     <h3 className={styles.name}>{this.state.product?.name}</h3>
 
-                    <div className={styles.options}>
-                        {this.state.product.attributes?.map((el)=>{
-                        return <div  key={el.name+el.brand}>
-                            <h4 className={styles.subTitle}>{el.name.toUpperCase()}:</h4>
-                            <div className={styles.attribute}>
-                                <ProductOptions 
-                                key={this.state.selections} 
-                                data={el} handleSelect={handleSelect} selections={this.state.selections}/>
-                            </div>
-                        </div>})}
-                    </div>
+                <GenerateOptions handleSelect={handleSelect} attributes={this.state.product.attributes} selections={this.state.selections}/>
 
                     <div className={styles.prices}>
-                        <h3 className={styles.subTitle}>PRICE:</h3>
+                        <h3 className={styles.subTitle} >PRICE:</h3>
                         <p>{getSymbolFromCurrency(this.props.currency)}
-                        {this.state.product.prices?.filter((el)=>el.currency==this.props.currency)[0].amount.toFixed(2)}
+                        {this.state.product.prices?.filter((el)=>el.currency===this.props.currency)[0].amount.toFixed(2)}
                         </p>
                     </div>
+                    
                     <p style={this.state.notSelected ? {color:"red",fontWeight:"bold"} : {display:"none"}}>PLEASE SELECT ALL THE FIELDS</p>
 
-                    <button className={styles.addToCart}  onClick={()=>addToCart()}>
-                        ADD TO CART
+                    <button className={styles.addToCart}  onClick={()=>addToCart()} disabled={!this.state.product.inStock}>
+                       {this.state.product.inStock ? 'ADD TO CART' : 'OUT OF STOCK'}
                     </button>
 
-                    <div className={styles.description}>
-                        {sanitizeHTML()}
-                    </div>
+                    <div className={styles.description}>{ sanitizeHTML() }</div>
                 </div>
                 </div>
             </div>
