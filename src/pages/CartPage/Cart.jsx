@@ -1,8 +1,5 @@
 import { Component } from "react"
 import styles from "./styles.module.css"
-import getSymbolFromCurrency from 'currency-symbol-map'
-import Vector from "../../components/assets/Vector (8).png"
-import GenerateOptions from "../../components/GenerateOptions"
 import Cartpageitem from "../../components/CartPageItem"
 export default class Cart extends Component{
     render(){

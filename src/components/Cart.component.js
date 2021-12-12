@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styles from "./Cart.styles.module.css"
 import cart from "./Header/assets/cart.png"
 import { Link } from 'react-router-dom';
-import getSymbolFromCurrency from 'currency-symbol-map';
 import Cartitems from "./CartItems"
 class CartComponent extends Component {
     render() {
