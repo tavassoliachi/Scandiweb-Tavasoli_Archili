@@ -6,9 +6,6 @@
     flex-direction: row;
     border-top: 1px solid #E5E5E5;
 }
-.calc{
-    display: none;
-}
 
 .info1{
     min-width: 200px;

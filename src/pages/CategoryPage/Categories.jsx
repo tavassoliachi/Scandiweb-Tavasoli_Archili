@@ -25,23 +25,31 @@ export default class Categories extends Component{
             console.log("Failed to fetch product list.")
         }
     }
+
+    mapProducts(){
+        if(this.state.loading){
+            return this.loading()
+        }else{
+            return  <div className={styles.subCont}>
+                        {this.state.data?.category?.products?.map((el)=>this.displayProducts(el))}
+                    </div>
+        }
+    }
+
+    displayProducts(el){
+        return <EachProduct setCart={this.props.setCart} key={el.gallery[0]} el={el} currency={this.state.currencyCURRENT}/>
+    }
+
+    loading(){
+        return <h4>Loading...</h4> 
+    }
+    
     render(){
 
         return(
             <div className={styles.mainCont}>
-
-                {this.state.loading ? 
-                        <h4>Loading...</h4>   
-                     : <div className={styles.subCont}>
-                         {
-                             this.state.data?.category?.products.map((el)=>{
-                                return <EachProduct setCart={this.props.setCart} key={el.gallery[0]} el={el} currency={this.state.currencyCURRENT}/>
-                              })
-                         }
-                                    
-                        </div>
-                }
-            </div   >
+                {this.mapProducts()}
+            </div  >
             
         )
     }

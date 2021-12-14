@@ -68,3 +68,10 @@
     font-weight: bold;
     color: black;
 }
+.hide{
+    display: none;
+}
+.visibility{
+    visibility:hidden;
+    pointer-events:none
+}

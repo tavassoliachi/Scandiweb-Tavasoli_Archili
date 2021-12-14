@@ -24,8 +24,11 @@ export default class Blackdrop extends PureComponent{
     componentWillUnmount() {
         window.removeEventListener("scroll", this.handleScroll);
     }
+    closeCart = () => {
+        this.props.setCartIsOpen(false)
+    }
 
     render() {
-        return <div className={styles.blackdrop} onClick={()=>this.props.setCartIsOpen(false)} style={{top:this.state.blackdropOffset}}/>;
+        return <div className={styles.blackdrop} onClick={this.closeCart} style={{top:this.state.blackdropOffset}}/>;
     }
 }

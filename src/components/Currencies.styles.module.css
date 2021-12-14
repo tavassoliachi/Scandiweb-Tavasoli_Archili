@@ -24,3 +24,9 @@
     padding:10px;
     transform: translateY(9px);
 }
+.hide{
+    display: none;
+}
+.rotation{
+    transform:rotate(180deg)
+}

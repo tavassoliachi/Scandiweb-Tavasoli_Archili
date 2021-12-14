@@ -65,5 +65,8 @@
     width:48%; 
     font-family: "raleway";
 }
+.hide{
+    display: none;
+}
 
 

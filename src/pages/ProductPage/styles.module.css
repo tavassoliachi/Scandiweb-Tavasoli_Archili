@@ -10,24 +10,11 @@
     font-family: "roboto-condensed"; 
     src: url('../../components/assets/fonts/RobotoCondensed-Regular.ttf');  
 }
-.sideIMAGES{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-height: 500px;
-}
-.sideIMAGES >img{
-    max-height:100px;
-    width:60px;
-    padding-right: 20px;
-}
+
 .productCont{
     position: relative;
 }
-.mainImage >img{
-    max-height: 500px;
-    max-width: 600px;
-}
+
 .select{
     border:1px solid black;
 }
@@ -106,4 +93,11 @@
     padding-top: 20px;
     display: flex;
     flex-direction: row;
+}
+.hide{
+    display: none;
+}
+.validation{
+    color:red;
+    font-weight: bold;
 }

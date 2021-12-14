@@ -127,5 +127,8 @@
 .vectors{
     cursor:pointer
 }
+.hide{
+    display: none;
+}
 
 

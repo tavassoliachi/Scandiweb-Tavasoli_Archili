@@ -43,6 +43,7 @@ export default class Header extends Component{
     this.setState({loading:true,category:el.toUpperCase(),data:{}})
     this.props.changeCategory(el)
     }
+    
 
     render(){
         return(

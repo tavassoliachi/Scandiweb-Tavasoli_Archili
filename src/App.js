@@ -17,22 +17,26 @@ export class App extends Component{
       darken:false,
       blackdropOffset:80
     }
+    this.changeCurrency = this.changeCurrency.bind(this)
+    this.changeCategory = this.changeCategory.bind(this)
+    this.changeQuantity = this.changeQuantity.bind(this)
+    this.setIsOpen = this.setIsOpen.bind(this)
+    this.setCartIsOpen = this.setCartIsOpen.bind(this)
+    this.setCart = this.setCart.bind(this)
   }
 
-  render(){
-
-  const changeCurrency = (el) =>{
+  changeCurrency(el){
     if(!Boolean(this.state.currency===el)){
       this.setState({currency:el})
     } 
   }
-  const changeCategory = (el) =>{
+  changeCategory(el){
     if(!Boolean(this.state.category===el)){
       this.setState({category:el})
     }  
   } 
 
-  const setCart=(el)=>{
+  setCart(el){
         if(this.state.cart.length === 0){
           this.setState({cart:[el]})
         }else{
@@ -41,8 +45,9 @@ export class App extends Component{
         this.state.cart.filter((e)=>e.name === el.name).forEach(element => {
             matchingOptions = []
             element.options.forEach((opt)=>
-            el.options.filter((opt2)=>opt2.name===opt.name)[0].value === opt.value ? matchingOptions.push(true) : matchingOptions.push(false)
-            )
+            matchingOptions.push(
+              Boolean(el.options.filter((opt2)=>opt2.name===opt.name)[0].value === opt.value)
+            ))
             
             if(!(matchingOptions.includes(false)) || matchingOptions.length===0){
               var cart = this.state.cart
@@ -54,9 +59,9 @@ export class App extends Component{
         if(newElement){
           this.setState({cart:[...this.state.cart,el]})
         }  }  
-  }
+        }
 
-    const changeQuantity=(id,num)=>{
+        changeQuantity(id,num){
         var currQuantity = this.state.cart.filter((el)=>el.id===id)[0].quantity
         var cart = this.state.cart
         if(currQuantity === 1 && num === -1){
@@ -69,14 +74,14 @@ export class App extends Component{
         
     }
 
-    const setCartIsOpen=(state)=>{
+    setCartIsOpen(state){
         if(this.state.isOpen===true && state===true){
           this.setState({cartIsOpen:true,isOpen:false})
         }else{
           this.setState({cartIsOpen:state})
         }
     }
-    const setIsOpen=(state)=>{
+    setIsOpen(state){
       if(this.state.cartIsOpen===true && state===true){
         this.setState({isOpen:true,cartIsOpen:false})
       }else{
@@ -84,19 +89,23 @@ export class App extends Component{
       }
     }
 
+  render(){
   return (
   <div className='mainContainer'>
               {this.state.cartIsOpen &&(
-                <Blackdrop setCartIsOpen={setCartIsOpen}/>
+                <Blackdrop setCartIsOpen={this.setCartIsOpen}/>
               )}
           <BrowserRouter>
-              <Header
-              key={this.state} 
-              setCartIsOpen={setCartIsOpen} setIsOpen={setIsOpen} cartIsOpen={this.state.cartIsOpen} isOpen={this.state.isOpen} changeCurrency={changeCurrency} currency={this.state.currency} changeCategory={changeCategory} category={this.state.category} cart={this.state.cart} setCart={setCart} changeQuantity={changeQuantity}/>
+              <Header key={this.state} setCartIsOpen={this.setCartIsOpen} setIsOpen={this.setIsOpen} 
+              cartIsOpen={this.state.cartIsOpen} isOpen={this.state.isOpen} 
+              changeCurrency={this.changeCurrency} currency={this.state.currency} 
+              changeCategory={this.changeCategory} category={this.state.category} 
+              cart={this.state.cart} setCart={this.setCart} changeQuantity={this.changeQuantity}/>
+
               <Routes currency={this.state.currency} category={this.state.category} 
                 key={this.state.currency+this.state.category} 
-                cart={this.state.cart} setCart={setCart}
-                changeQuantity={changeQuantity}
+                cart={this.state.cart} setCart={this.setCart}
+                changeQuantity={this.changeQuantity}
                 darken = {this.state.cartIsOpen || this.state.isOpen}
                 />
           </BrowserRouter>    
