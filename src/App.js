@@ -108,6 +108,7 @@ export class App extends Component{
                 changeQuantity={this.changeQuantity}
                 darken = {this.state.cartIsOpen || this.state.isOpen}
                 />
+                {console.log("hey")}
           </BrowserRouter>    
       </div>
     
